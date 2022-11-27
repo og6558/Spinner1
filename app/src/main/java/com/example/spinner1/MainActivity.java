@@ -14,13 +14,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     ListView list;
     TextView tv1, tv2, tv3, tv4;
     Spinner spin;
-    ArrayAdapter<String> adp;
     String [][] familynames = {{"gabay", "gedge", "bonkin", "levi", "rabaliov", "kredeif", "shtayman", "benbaroch", "menachem", "iluzz"},
             {"curry","james","harden","bryant","durant","westbrook","malone","jordan","oneal","web"},
             {"ronaldo", "messi", "ibrahimovich", "ronnie", "antatakompo", "irving", "pnini", "zomer", "puol", "gasol"},
             {"adams", "brown", "sorkin", "willbakin", "benshitrit", "kol", "cohen", "ziv", "nevo", "agmon"}};
 
-    String [][] firstnames = {{"orel", "dorel", "idan", "harel", "dan", "nisim", "shay", "erel", "inber", "yonathan"},
+    String [][] firstnames = {{},
+            {"orel", "dorel", "idan", "harel", "dan", "nisim", "shay", "erel", "inber", "yonathan"},
             {"stephen","lebron","james","kobe","kevin","russal","karl","michael","shaqil","spud"},
             {"cristiano", "lional", "zlatan", "wayne", "gainnis", "kairye", "gay", "bar", "chris", "pao"},
             {"jalen", "loranzo", "roman", "scottie", "ytzhak", "sorin", "jake", "yftach", "josh", "tomar"}};
@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     int classeleced = 0;
 
-    ArrayAdapter<String> adp1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,21 +49,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         tv3 = (TextView) findViewById(R.id.tv3);
         tv4 = (TextView) findViewById(R.id.tv4);
         list = (ListView) findViewById(R.id.list);
+        list.setOnItemClickListener(this);
+
         spin = (Spinner) findViewById(R.id.spin);
-
-        spin.setOnItemSelectedListener(this);
-
-        list.setOnItemClickListener(this);  
-
-        adp1 = new ArrayAdapter<String>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, classes);
+        ArrayAdapter<String> adp1 = new ArrayAdapter<String>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, classes);
         spin.setAdapter(adp1);
+        spin.setOnItemSelectedListener(this);
 
 
     }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        adp = new ArrayAdapter<String>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, firstnames[i-1]);
+        ArrayAdapter<String> adp = new ArrayAdapter<String>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, firstnames[i]);
         list.setAdapter(adp);
         classeleced = i-1;
     }
@@ -76,8 +73,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        tv1.setText(familynames[classeleced][i]);
-        tv2.setText(firstnames[classeleced][i]);
+        tv1.setText(firstnames[classeleced+1][i]);
+        tv2.setText(familynames[classeleced][i]);
         tv3.setText(borndate[classeleced][i]);
         tv4.setText(phonenumber[classeleced][i]);
     }
